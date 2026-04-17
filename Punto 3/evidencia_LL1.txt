@@ -1,0 +1,93 @@
+PUNTO 3 - DEMOSTRACIÓN DE GRAMÁTICA LL(1)
+
+1. Gramática dada:
+
+S → AaAb | BbBa
+A → ε
+B → ε
+
+--------------------------------------------------
+
+2. Cálculo de conjuntos FIRST:
+
+FIRST(A) = { ε }
+FIRST(B) = { ε }
+
+Producción 1:
+S → AaAb
+
+A → ε, por lo tanto se ignora
+Siguiente símbolo: a
+
+FIRST(AaAb) = { a }
+
+Producción 2:
+S → BbBa
+
+B → ε, por lo tanto se ignora
+Siguiente símbolo: b
+
+FIRST(BbBa) = { b }
+
+--------------------------------------------------
+
+3. Verificación de condición LL(1):
+
+FIRST(AaAb) = { a }
+FIRST(BbBa) = { b }
+
+Intersección:
+
+{ a } ∩ { b } = ∅
+
+No hay intersección entre los conjuntos FIRST.
+
+--------------------------------------------------
+
+4. Verificación con ANTLR:
+
+Se ejecutó el siguiente comando:
+
+antlr4 -Dlanguage=Python3 CRUD.g4
+
+Resultado:
+No se generaron errores ni advertencias de ambigüedad.
+
+Esto indica que la gramática no presenta conflictos de decisión.
+
+--------------------------------------------------
+
+5. Pruebas realizadas:
+
+Entrada 1:
+INSERT INTO usuarios VALUES {nombre:"Juan"}
+
+Resultado:
+Consulta válida
+
+Entrada 2:
+FIND IN ventas WHERE total > 100
+
+Resultado:
+Consulta válida
+
+Entrada 3:
+FIND IN ventas WHERE total > 100 || zona == "norte"
+
+Resultado:
+Consulta válida
+
+En todos los casos el parser generó un único árbol sintáctico.
+
+--------------------------------------------------
+
+6. Conclusión:
+
+La gramática es LL(1) porque:
+
+- Los conjuntos FIRST de las producciones son disjuntos
+- No existen conflictos de selección
+- ANTLR no reporta ambigüedades
+- El parser genera un único árbol sintáctico por entrada
+
+Por lo tanto, la gramática puede ser analizada mediante un parser predictivo.
